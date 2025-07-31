@@ -1,0 +1,7 @@
+streamlit
+pandas
+numpy
+yfinance
+sentence-transformers
+scikit-learn
+openpyxl
