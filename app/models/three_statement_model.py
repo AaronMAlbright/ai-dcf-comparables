@@ -6,10 +6,11 @@ def forecast_3_statement(
     depreciation_pct: float,
     nwc_pct: float,
     tax_rate: float,
-    interest_expense: float,
-    debt: float,
+    interest_expense: float = 0.0,
+    debt: float = 0.0,
     years: int = 5
 ) -> dict:
+
     """
     Forecasts income statement, balance sheet, and cash flow statement to produce FCF.
     Returns a dictionary of yearly outputs including revenue, EBIT, NOPAT, D&A, CapEx, ∆NWC, and FCF.
