@@ -1,20 +1,23 @@
-import numpy as np
-
-def calculate_dcf(fcf_forecast, discount_rate, terminal_growth_rate):
+def calculate_dcf(fcf_forecast: list, wacc: float,
+                  terminal_growth: float) -> float:
     """
-    Calculate the DCF value from forecasted free cash flows.
+    Discount projected Free Cash Flows to present value using WACC and a terminal growth rate.
 
-    :param fcf_forecast: list of forecasted FCFs for N years
-    :param discount_rate: WACC / discount rate as decimal (e.g., 0.10 for 10%)
-    :param terminal_growth_rate: terminal growth rate (e.g., 0.02 for 2%)
-    :return: intrinsic value (DCF sum)
+    Parameters:
+    - fcf_forecast: list of forecasted FCFs per year
+    - wacc: Weighted Average Cost of Capital (as a decimal, e.g., 0.09 for 9%)
+    - terminal_growth: Terminal growth rate (as a decimal, e.g., 0.02 for 2%)
+
+    Returns:
+    - Net Present Value (NPV) of the business
     """
-    dcf_value = 0
+    npv = 0.0
     for t, fcf in enumerate(fcf_forecast, start=1):
-        dcf_value += fcf / ((1 + discount_rate) ** t)
+        npv += fcf / ((1 + wacc) ** t)
 
-    # Terminal Value (Gordon Growth)
-    terminal_value = fcf_forecast[-1] * (1 + terminal_growth_rate) / (discount_rate - terminal_growth_rate)
-    terminal_discounted = terminal_value / ((1 + discount_rate) ** len(fcf_forecast))
+    # Terminal Value using perpetuity growth model
+    terminal_value = fcf_forecast[-1] * (1 + terminal_growth) / (
+                wacc - terminal_growth)
+    terminal_pv = terminal_value / ((1 + wacc) ** len(fcf_forecast))
 
-    return dcf_value + terminal_discounted
+    return npv + terminal_pv
