@@ -5,6 +5,15 @@ from colorama import Fore, Style
 
 from app.services.peer_matcher_service import run_peer_match_pipeline
 
+def parse_range(s):
+    try:
+        parts = [float(x.strip()) for x in s.split(",")]
+        if len(parts) != 2:
+            raise ValueError
+        return tuple(parts)
+    except:
+        raise argparse.ArgumentTypeError("Ranges must be two floats separated by a comma (e.g. 0.08,0.12)")
+
 
 def main():
     print(f"{Fore.CYAN}🚀 RUN_PEER_MATCH.PY STARTED{Style.RESET_ALL}")
@@ -29,6 +38,9 @@ def main():
         action="store_true",
         help="Export full peer similarity table to CSV"
     )
+    parser.add_argument("--wacc_range", type=parse_range, help="WACC range for sensitivity (e.g. 0.08,0.12)")
+    parser.add_argument("--terminal_growth_range", type=parse_range, help="Terminal growth range (e.g. 0.02,0.04)")
+
 
     args = parser.parse_args()
 
@@ -43,6 +55,8 @@ def main():
         output_json=args.output_json,
         multiple_type=args.multiple_type,
         export_peers=args.export_peers,
+        wacc_range=args.wacc_range,
+        terminal_growth_range=args.terminal_growth_range,
     )
 
     if result is None:

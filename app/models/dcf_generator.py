@@ -1,6 +1,53 @@
 import random
 from app.models.three_statement_model import forecast_3_statement
 from app.models.dcf_model import discounted_cash_flow
+import numpy as np
+
+def run_sensitivity_analysis(
+    forecast: list[dict],
+    wacc_range: tuple,
+    terminal_growth_range: tuple,
+    step: float = 0.01
+) -> dict:
+    """
+    Builds a sensitivity table of DCF valuations over WACC and terminal growth rate ranges.
+
+    Args:
+        forecast (list[dict]): List of forecasted financials per year (must include 'fcf')
+        wacc_range (tuple): (min_wacc, max_wacc)
+        terminal_growth_range (tuple): (min_tgr, max_tgr)
+        step (float): increment for both axes (default 0.01)
+
+    Returns:
+        dict: {
+            "wacc_values": [...],
+            "terminal_growth_values": [...],
+            "valuation_matrix": [[...], [...], ...]
+        }
+    """
+    fcfs = [year.get("fcf", 0) for year in forecast]
+    if not fcfs:
+        raise ValueError("⚠️ No forecasted FCFs found for sensitivity analysis.")
+
+    wacc_values = np.arange(wacc_range[0], wacc_range[1] + step, step)
+    tg_values = np.arange(terminal_growth_range[0], terminal_growth_range[1] + step, step)
+
+    matrix = []
+    for wacc in wacc_values:
+        row = []
+        for tg in tg_values:
+            try:
+                value = discounted_cash_flow(fcfs, wacc=wacc, terminal_growth=tg)
+                row.append(round(value, 2))
+            except Exception:
+                row.append(None)
+        matrix.append(row)
+
+    return {
+        "wacc_values": wacc_values.tolist(),
+        "terminal_growth_values": tg_values.tolist(),
+        "valuation_matrix": matrix
+    }
 
 def mock_dcf_valuation(company_description: str) -> float:
     """
