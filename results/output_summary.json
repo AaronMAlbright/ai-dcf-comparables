@@ -1,0 +1,13 @@
+{
+  "company_name": "Sample Peer A",
+  "dcf_value": 1966.6277871119664,
+  "peer_value": 11760.0,
+  "combined_valuation": 6863.31,
+  "top_peers": [
+    {
+      "peer_name": "Sample Peer B",
+      "similarity": 0.8543,
+      "ev_ebitda": 16.8
+    }
+  ]
+}

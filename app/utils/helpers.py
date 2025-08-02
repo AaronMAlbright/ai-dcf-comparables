@@ -1,4 +1,5 @@
 from rich import print
+import numpy as np
 
 def print_check(msg):
     print(f"[green]✅ {msg}[/green]")
@@ -10,17 +11,17 @@ def print_error(msg):
     print(f"[red]❌ {msg}[/red]")
 
 def validate_vector(vector):
-    """
-    Validates that the given vector is a non-empty list or tensor of floats.
-    """
     if vector is None:
         return False
-    if isinstance(vector, list) and all(isinstance(x, (int, float)) for x in vector):
-        return True
-    try:
-        import torch
-        if isinstance(vector, torch.Tensor) and vector.numel() > 0:
-            return True
-    except ImportError:
-        pass
-    return False
+    vector = np.array(vector)
+    return vector.ndim == 1 and vector.dtype.kind in {'f'} and not np.any(np.isnan(vector))
+
+
+
+
+if __name__ == "__main__":
+    print(validate_vector([0.0, 0.0, 0.0]))   # ❌ Expect False
+    print(validate_vector([0.01, -0.02, 0.0])) # ✅ Expect True
+
+
+
