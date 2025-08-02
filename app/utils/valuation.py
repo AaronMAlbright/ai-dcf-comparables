@@ -41,58 +41,40 @@ def combine_valuations(
     )
 
 
-def estimate_peer_valuation(
-    peers: list,
-    target_peer: dict,
-    multiple_key: str = "ev_ebitda",
-    metric_key: str = "ebitda"
-) -> dict:
-    print(
-        f"🧪 Estimating value from {len(peers)} peers using multiple: {multiple_key}")
-
-    if peers:
-        print(f"📌 Sample peer data: {peers[0]}")
-    else:
-        print("❌ No peers passed into valuation.")
+def estimate_peer_valuation(peers, target_company, multiple_type="ev_ebitda"):
     """
-    Estimate peer-based valuation using a median multiple and a target metric.
-
-    Returns a dictionary with keys:
-    - median_multiple
-    - target_metric
-    - implied_value
+    Estimate the target company's value using peer multiples.
+    Supports EV/EBITDA and P/E ratio.
     """
+    metric = "ebitda" if multiple_type == "ev_ebitda" else "earnings"
+    multiple_key = "ev_ebitda" if multiple_type == "ev_ebitda" else "pe_ratio"
 
-    valid_multiples = []
-    for peer in peers:
-        if peer.get("name") == target_peer.get("name"):
-            continue
-
-        multiple = peer.get(multiple_key)
-        print(f"🧪 {peer['name']} ev/EBITDA: {multiple}")
-        if isinstance(multiple, (int, float)):
-            valid_multiples.append(multiple)
-        else:
-            print(f"⚠️ Skipping {peer.get('name')} — missing or invalid {multiple_key}: {multiple}")
-
-    if not valid_multiples:
-        print("❌ No valid peer multiples found.")
-        return {"median_multiple": None, "target_metric": None, "implied_value": None}
-
-    median_multiple = np.median(valid_multiples)
-
-    target_metric = target_peer.get(metric_key)
+    target_metric = target_company.get(metric)
     if target_metric is None:
-        print(f"⚠️ Target peer is missing '{metric_key}' entirely: {target_peer.get('name')}")
+        print(f"❌ Missing target metric ({metric}) for {target_company.get('name')}")
+        return None
 
-    if not isinstance(target_metric, (int, float)):
-        print("❌ Target metric missing or invalid.")
-        return {"median_multiple": median_multiple, "target_metric": None, "implied_value": None}
+    # Collect valid peer multiples
+    multiples = []
+    for peer in peers:
+        peer_val = peer.get(multiple_key)
+        if isinstance(peer_val, (int, float)):
+            multiples.append(peer_val)
+        else:
+            print(f"⚠️ Invalid or missing {multiple_key} for {peer.get('name')}")
 
-    implied_value = median_multiple * target_metric
+    if not multiples:
+        print(f"❌ No valid {multiple_type} multiples found in peers.")
+        return None
+
+    avg_multiple = sum(multiples) / len(multiples)
+    implied_value = avg_multiple * target_metric
 
     return {
-        "median_multiple": median_multiple,
-        "target_metric": target_metric,
-        "implied_value": implied_value
+        "valuation_method": multiple_type,
+        "implied_value": round(implied_value, 2),
+        "target_metric": round(target_metric, 2),
+        "avg_multiple": round(avg_multiple, 2),
+        "peer_count": len(multiples)
     }
+

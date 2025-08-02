@@ -13,9 +13,10 @@
     "nwc_pct": 0.04,
     "tax_rate": 0.21,
     "terminal_growth": 0.025,
-    "vector": null,
+    "earnings": 400,
     "ev_ebitda": 18.2,
-    "pe_ratio": 22.5
+    "pe_ratio": 22.5,
+    "vector": null
   },
   {
     "name": "Sample Peer B",
@@ -30,10 +31,10 @@
     "capex_pct": 0.04,
     "nwc_pct": 0.03,
     "tax_rate": 0.21,
-    "terminal_growth": 0.025,
-    "vector": null,
+    "terminal_growth": 0.03,
+    "earnings": 350,
     "ev_ebitda": 16.8,
-    "pe_ratio": 25.1
+    "pe_ratio": 25.1,
+    "vector": null
   }
 ]
-

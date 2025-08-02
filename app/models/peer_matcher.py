@@ -57,7 +57,7 @@ def prepare_vectors(company_name, exclude_name=None):
     return target_vector, peer_data
 
 
-def find_closest_peers(target_vector, peer_data, top_k=5, target_name=None):
+def find_closest_peers(target_vector, peer_data, top_k=5, target_name=None, min_similarity=0.0):
     similarities = []
 
     for peer in peer_data:
@@ -86,8 +86,11 @@ def find_closest_peers(target_vector, peer_data, top_k=5, target_name=None):
                 torch.tensor([vector], dtype=torch.float32)
             )[0][0].item()
 
-            similarities.append((peer, similarity))
-            print(f"✅ Similarity with {name}: {similarity:.4f}")
+            if similarity >= min_similarity:
+                similarities.append((peer, similarity))
+                print(f"✅ Similarity with {name}: {similarity:.4f}")
+            else:
+                print(f"⚠️ Similarity {similarity:.4f} below threshold {min_similarity}")
         except Exception as e:
             print(f"❌ Error computing similarity for {name}: {e}")
 
@@ -99,6 +102,7 @@ def find_closest_peers(target_vector, peer_data, top_k=5, target_name=None):
 
     top_peers = sorted(similarities, key=lambda x: x[1], reverse=True)[:top_k]
     return top_peers
+
 
 
 def apply_peer_multiples(target_company: dict, peers: list, multiple_type: str = "ev_ebitda") -> dict:

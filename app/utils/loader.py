@@ -36,7 +36,8 @@ def create_company_vector(company: dict, use_numerics: bool = True) -> np.ndarra
     if not use_numerics:
         if validate_vector(desc_vector):
             set_cached_vector(name, desc_vector.tolist())
-            return desc_vector
+            return np.array(desc_vector)
+
         else:
             print(f"❌ Invalid description-only vector for {name}")
             return None
@@ -61,7 +62,8 @@ def create_company_vector(company: dict, use_numerics: bool = True) -> np.ndarra
             print(f"❌ Combined vector is invalid for {name}")
             return None
         set_cached_vector(name, combined.tolist())
-        return combined
+        return np.array(combined)
+
     except Exception as e:
         print(f"❌ Vector combination error for {name}: {e}")
         return None
