@@ -2,6 +2,8 @@ import argparse
 import json
 import os
 from colorama import Fore, Style
+import csv
+
 
 from app.services.peer_matcher_service import run_peer_match_pipeline
 
@@ -40,7 +42,17 @@ def main():
     )
     parser.add_argument("--wacc_range", type=parse_range, help="WACC range for sensitivity (e.g. 0.08,0.12)")
     parser.add_argument("--terminal_growth_range", type=parse_range, help="Terminal growth range (e.g. 0.02,0.04)")
+    parser.add_argument(
+        "--export_json",
+        type=str,
+        help="Path to save peer results as JSON"
+    )
 
+    parser.add_argument(
+        "--export_csv",
+        type=str,
+        help="Path to save peer results as CSV"
+    )
 
     args = parser.parse_args()
 
@@ -72,6 +84,25 @@ def main():
         with open(output_path, "w") as f:
             json.dump(result, f, indent=2)
         print(f"{Fore.GREEN}📝 Results saved to {output_path}{Style.RESET_ALL}")
+
+    # ✅ Export full peer results to separate files if requested
+    if args.export_json and "peers" in result:
+        export_output = {
+            "summary": result.get("summary"),
+            "peers": result.get("peers")
+        }
+        with open(args.export_json, "w") as f:
+            json.dump(export_output, f, indent=2)
+        print(f"{Fore.GREEN}📁 Peer data exported to JSON: {args.export_json}{Style.RESET_ALL}")
+
+    if args.export_csv and "peers" in result:
+        peer_rows = result.get("peers")
+        with open(args.export_csv, "w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=peer_rows[0].keys())
+            writer.writeheader()
+            writer.writerows(peer_rows)
+        print(f"{Fore.GREEN}📁 Peer data exported to CSV: {args.export_csv}{Style.RESET_ALL}")
+
 
 
 if __name__ == "__main__":

@@ -4,6 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import json
 import os
+import io
 
 st.set_page_config(page_title="AI-Powered DCF & Peer Valuation", layout="wide")
 st.title("📊 AI-Powered DCF & Peer Valuation Dashboard")
@@ -54,3 +55,27 @@ if os.path.exists(SENS_PATH):
     st.pyplot(fig)
 else:
     st.warning("No sensitivity_matrix.csv found. Run with --wacc_range and --terminal_growth_range.")
+
+st.subheader("📥 Export Results")
+
+# ✅ Prepare peer CSV
+csv_buffer = io.StringIO()
+peer_df.to_csv(csv_buffer, index=False)
+csv_data = csv_buffer.getvalue()
+
+st.download_button(
+    label="📥 Download Peers as CSV",
+    data=csv_data,
+    file_name="peer_matches.csv",
+    mime="text/csv"
+)
+
+# ✅ Prepare JSON export
+json_data = json.dumps(result, indent=2)
+
+st.download_button(
+    label="📥 Download Full Results (JSON)",
+    data=json_data,
+    file_name="valuation_results.json",
+    mime="application/json"
+)

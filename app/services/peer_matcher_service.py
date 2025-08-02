@@ -215,5 +215,6 @@ def run_peer_match_pipeline(
                 f"{val:8,.0f}" if val is not None else "   N/A" for val in matrix[i]
             ])
             print(row)
+    result_data["peers"] = result_data["top_peers"]
 
     return result_data

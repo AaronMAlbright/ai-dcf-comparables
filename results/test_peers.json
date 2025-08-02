@@ -1,0 +1,11 @@
+{
+  "summary": null,
+  "peers": [
+    {
+      "peer_name": "Sample Peer B",
+      "similarity": 0.8543,
+      "ev_ebitda": 16.8,
+      "pe_ratio": 25.1
+    }
+  ]
+}
