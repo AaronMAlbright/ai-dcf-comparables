@@ -2,7 +2,7 @@ import sys
 print("Python executable:", sys.executable)
 
 
-from app.models.peer_matcher import find_closest_peers
+from dcf_app.models.peer_matcher import find_closest_peers
 
 def test_find_closest_peers_output():
     target = "Large technology company focused on cloud computing and enterprise software"

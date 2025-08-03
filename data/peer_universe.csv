@@ -1,0 +1,11 @@
+ticker,name,description,sector,industry,revenue_base,revenue_growth,ebitda_margin,ev_ebitda,pe_ratio
+TSLA,Tesla Inc.,"Electric vehicles and energy products",Consumer Cyclical,Auto Manufacturers,80000,0.30,0.21,25.1,75
+F,Ford Motor Company,"Automobiles and mobility solutions",Consumer Cyclical,Auto Manufacturers,140000,0.05,0.10,7.8,14.2
+AAPL,Apple Inc.,"Consumer electronics and software",Technology,Consumer Electronics,394000,0.06,0.33,20.5,28.4
+MSFT,Microsoft Corp.,"Cloud, software, and productivity tools",Technology,Software—Infrastructure,230000,0.10,0.45,18.9,35.2
+GOOGL,Alphabet Inc.,"Online ads, cloud, and AI",Communication Services,Internet Content & Information,280000,0.09,0.34,16.2,29.1
+NVDA,NVIDIA Corp.,"GPUs and AI chips",Technology,Semiconductors,27000,0.20,0.35,22.2,48.3
+JPM,JPMorgan Chase,"Financial services and investment banking",Financial Services,Banks—Diversified,155000,0.04,0.40,11.3,10.5
+UNH,UnitedHealth Group,"Healthcare plans and services",Healthcare,Healthcare Plans,320000,0.08,0.13,14.4,22.9
+PG,Procter & Gamble,"Consumer goods and hygiene products",Consumer Defensive,Household & Personal Products,82000,0.03,0.27,17.1,25.3
+XOM,Exxon Mobil,"Oil and gas production and refining",Energy,Oil & Gas Integrated,345000,0.02,0.18,8.7,13.7

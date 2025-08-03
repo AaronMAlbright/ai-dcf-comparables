@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
-from app.data.loader import get_financials
-from app.utils.loader import create_company_vector
+from dcf_app.data.loader import get_financials
+from dcf_app.utils.loader import create_company_vector
 
 class TestLoader(unittest.TestCase):
     def test_get_financials_returns_data(self):
@@ -36,7 +36,7 @@ class TestCreateCompanyVector(unittest.TestCase):
         self.assertIsInstance(vec, np.ndarray)
 
     def test_target_is_excluded_from_peers(self):
-        from app.utils.loader import load_company_data
+        from dcf_app.utils.loader import load_company_data
 
         # Assume your peers.json includes a company named "TestCorp"
         target_name = "Sample Peer A"

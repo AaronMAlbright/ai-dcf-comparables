@@ -1,4 +1,4 @@
-from app.utils.loader import create_company_vector
+from dcf_app.utils.loader import create_company_vector
 import numpy as np
 
 def main():

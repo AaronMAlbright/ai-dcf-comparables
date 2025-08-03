@@ -1,4 +1,4 @@
-from app.sensitivity import run_sensitivity_analysis
+from dcf_app.sensitivity import run_sensitivity_analysis
 
 def test_run_sensitivity_analysis():
     base_inputs = {

@@ -1,5 +1,5 @@
 import unittest
-from app.models.dcf_generator import generate_forecasted_fcfs, run_dcf_from_inputs
+from dcf_app.models.dcf_generator import generate_forecasted_fcfs, run_dcf_from_inputs
 
 class TestDCFGenerator(unittest.TestCase):
     def setUp(self):

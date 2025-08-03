@@ -1,4 +1,4 @@
-from app.models.dcf_model import calculate_dcf
+from dcf_app.models.dcf_model import calculate_dcf
 
 def test_calculate_dcf_basic():
     fcf = [100, 110, 120]

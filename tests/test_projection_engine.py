@@ -1,5 +1,5 @@
 import pytest
-from app.models.projection_engine import project_valuation
+from dcf_app.models.projection_engine import project_valuation
 
 def test_project_valuation_output():
     inputs = {
