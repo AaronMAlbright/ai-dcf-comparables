@@ -1,5 +1,3 @@
-![Image 8-2-25 at 12 20 AM](https://github.com/user-attachments/assets/39166ed6-39ad-45e6-8fa0-faa0a8adad8c)
-Automated-DCF-Engine-with-NLP-Based-Peer-Matching
 Automated DCF Engine with NLP-Based Peer Matching
 
 AI-Powered DCF Valuation & Comparable Company Engine
@@ -12,8 +10,10 @@ A Python-based financial valuation platform that automates discounted cash flow 
  QuantLib Integration for derivative pricing overlays (e.g., options, credit models)
  Modular, API-ready architecture with optional Docker/Streamlit deployment
 Compatible with AWS/GCP deployment and cron-based automation
+
 Sample Output
 Dashboard Screenshot
+
 ![Image 8-2-25 at 12 20 AM](https://github.com/user-attachments/assets/39166ed6-39ad-45e6-8fa0-faa0a8adad8c)
 
 Ticker	DCF Value	Current Price	Upside	Top Comparables
@@ -43,6 +43,8 @@ QuantLib, sentence-transformers, openai (optional)
 FastAPI / Streamlit (frontend or API)
 Docker-ready for deployment
 PostgreSQL / SQLite (for persistence, optional)
+
+
 Installation
 git clone https://github.com/yourusername/dcf-ai-comparables.git
 cd dcf-ai-comparables
